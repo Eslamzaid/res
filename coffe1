@@ -1,0 +1,82 @@
+def get_Op(obj):
+    print('\n   *******   ')
+    for k,v in obj.items():
+        print(">>>>", k, f'${v}')
+    print('   *******   ')
+def get_Or(obj, label):      
+    while True:
+        i = input(label)
+        if label == 'Additional: ':
+            if i == 'pass':
+                print("Preparing your order...")         
+                return 0, 0
+        if i == 'cancel':
+            print("You canceled your order...")
+            quit()
+        elif i in obj:
+            return i, obj[i]
+    
+
+def get_CoffeT():
+    print('-----------Welcome to our shop-----------')
+    print("+++ Chose a type of coffee you want (Write 'cancel' to cancel) +++")
+    typ = {
+        'Arabica': 30,
+        'Robusta': 40,
+        'Black': 44,
+        'Espresso': 32
+    }
+    get_Op(typ)
+    name, price = get_Or(typ, 'Type: ')
+    return name, price  
+def get_Size():
+    size = ['Sm', 'M', 'l', 'Xl']
+    print("+++ What size you want ('cancel' to cancel) +++")
+    size = {
+        'Sm': 5,
+        'M': 10,
+        'l': 20,
+        'Xl': 35
+    }
+    get_Op(size)
+    size, price = get_Or(size, 'Size: ')
+    return size, price
+def get_Add():
+    print("Add some additions to your coffee ('pass' to no additions)")
+    additions = {
+        'Vanilla': 10,
+        'Cocoa Nibs': 15,
+        'Ginger': 2,
+        'Peppermint Oil': 20,
+        'Butter': 30,
+        'Lavender': 12
+    }
+    get_Op(additions)
+    lst = dict()
+    while True:
+        name, price = get_Or(additions, 'Additional: ')
+        if name == 0:
+            break
+        if name not in lst:
+            lst[name] = price
+        elif name in lst:
+            print("You already add this")
+    return lst
+            
+
+def ask():
+    coffeT, price = get_CoffeT()
+    size, s_Price = get_Size()
+    add = get_Add()
+    total = price + s_Price
+    lst = list()
+    if len(add) != 0:
+        for k,v in add.items():
+            total += v
+            lst.append(k)    
+        print("You ordered a", size, coffeT, 'coffee with', ', '.join(lst))
+        print("Your total is:", total)
+    else:
+        print("You ordered a", size, coffeT, 'coffee')
+        print("Your total is:", total)
+ask()
